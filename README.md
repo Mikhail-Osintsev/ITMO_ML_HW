@@ -1,1 +1,99 @@
 # ITMO_ML_HW
+
+Car Faults: Multi-Task ML (classification + regression)
+
+Задача (Kaggle):
+Каршеринг с большим автопарком. Регулярные осмотры важны, но ресурсы ограничены.
+Цель — приоритизировать обход: кого смотреть раньше и какого типа поломку ожидать, чтобы правильно планировать бригады и оборудование.
+
+предсказать для каждой машины:
+	1.	тип поломки target_class (мультиклассовая классификация, 9 классов);
+	2.	время до поломки target_reg (регрессия).
+
+Соревнование: Competative Data Science Course by Data Feeling
+Kaggle: https://www.kaggle.com/competitions/competative-data-science-course-by-data-feeling
+
+
+
+Данные
+
+Главные таблицы:
+	•	car_train.csv / car_test.csv — описание машины, таргеты:
+	•	car_id, model, car_type, fuel_type, car_rating, riders,
+year_to_start, year_to_work, main_city,
+target_reg (время до поломки), target_class (тип поломки, 9 классов).
+
+Дополнительные таблицы:
+	•	rides_info.csv — поездки (скорости, длительность, расстояние, стоимость, дозаправка, метрики вождения и т.п.).
+	•	driver_info.csv — профиль водителя (пол, возраст, рейтинги, количество поездок, инциденты и т.д.).
+	•	fix_info.csv — ремонты (тип работ, длительность, степень износа, дата ремонта).
+
+⸻
+
+Метрики:
+	•	для target_class — Macro F1 (или Weighted F1 при сильном дисбалансе);
+	•	для target_reg — MAE/RMSE (с лог-преобразованием таргета, если распределение скошено).
+
+
+Структура проекта
+
+ITMO_ML_HW/
+├─ data/
+│  ├─ raw/                 # исходники с Kaggle (НЕ коммитим)
+│  ├─ external/            # при необходимости: сторонние источники
+│  ├─ interim/             # временные и кэш-артефакты
+│  └─ processed/           # финальные фичи/фолды для обучения
+│
+├─ notebooks/
+│  ├─ 01_eda_overview.ipynb              # общий EDA по всем таблицам
+│  ├─ 02_feature_aggs.ipynb              # прототип агрегаций по rides/driver/fix
+│  ├─ 03_model_classification_baseline.ipynb
+│  ├─ 04_model_regression_baseline.ipynb
+│  └─ 05_error_analysis.ipynb            # разбор ошибок/важность фич
+│
+├─ src/
+│  ├─ data/
+│  │  ├─ load.py                         # единая загрузка CSV
+│  │  ├─ merge.py                        # джоины и согласование ключей
+│  │  └─ split.py                        # фолды (StratifiedKFold, TimeSplit и т.п.)
+│  │
+│  ├─ features/
+│  │  ├─ make_features.py                # конвейер генерации фич (агрегаты, энкодинги)
+│  │  └─ selectors.py                    # отбор фич, фильтрация коллинеарности
+│  │
+│  ├─ models/
+│  │  ├─ train_cls.py                    # обучение классификации (target_class)
+│  │  ├─ train_reg.py                    # обучение регрессии (target_reg)
+│  │  ├─ infer_cls.py                    # инференс на test для класса
+│  │  ├─ infer_reg.py                    # инференс на test для регрессии
+│  │  └─ metrics.py                      # локальные метрики/метрики CV
+│  │
+│  ├─ utils/
+│  │  ├─ io.py                           # сохранение/загрузка моделей и артефактов
+│  │  ├─ logging.py                      # единый логгер
+│  │  └─ seed.py                         # фиксация random_state
+│  │
+│  └─ pipelines/
+│     └─ train_pipeline.py               # end-to-end: данные → фичи → обучение → валидация
+│
+├─ configs/
+│  ├─ config_cls.yaml                    # гиперпараметры модели классификации, список фич
+│  ├─ config_reg.yaml                    # гиперпараметры модели регрессии
+│  └─ paths.yaml                         # все пути к данным/артефактам
+│
+├─ models/
+│  ├─ cls/                               # сохранённые модели классификации, oof, импортансы
+│  └─ reg/                               # сохранённые модели регрессии, oof
+│
+├─ reports/
+│  ├─ figures/                           # графики EDA, важности фич, PR/ROC и т.д.
+│  └─ tables/                            # сводные таблицы, метрики, сравнения
+│
+├─ submissions/                          # сабмиты для Kaggle
+│
+├─ requirements.txt
+├─ README.md
+└─ .gitignore
+
+
+

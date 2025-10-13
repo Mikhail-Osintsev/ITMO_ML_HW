@@ -1,1 +1,26 @@
 .DS_Store
+# os / editors
+.DS_Store
+*.swp
+.idea/
+.vscode/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+env/
+.venv*/
+
+# jupyter
+.ipynb_checkpoints/
+
+# data & artifacts
+data/raw/
+data/external/
+data/interim/
+models/
+submissions/*.zip
+
+# logs
+logs/

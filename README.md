@@ -54,6 +54,7 @@ target_reg (время до поломки), target_class (тип поломки
 
 # Структура проекта
 
+```text
 ITMO_ML_HW/
 ├─ data/
 │  ├─ raw/                 # исходники с Kaggle 
@@ -111,6 +112,8 @@ ITMO_ML_HW/
 ├─ requirements.txt
 ├─ README.md
 └─ .gitignore
+
+```
 
 
 

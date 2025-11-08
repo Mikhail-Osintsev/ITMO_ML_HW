@@ -7,6 +7,7 @@
 
 # python
 __pycache__/
+venv310/
 *.pyc
 .venv/
 env/
@@ -16,9 +17,6 @@ env/
 .ipynb_checkpoints/
 
 # data & artifacts
-data/raw/
-data/external/
-data/interim/
 models/
 submissions/*.zip
 

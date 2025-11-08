@@ -16,7 +16,6 @@ venv310/
 .ipynb_checkpoints/
 
 # data & artifacts
-data/raw/
 data/external/
 data/interim/
 models/

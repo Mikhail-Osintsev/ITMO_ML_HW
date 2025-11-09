@@ -1,12 +1,10 @@
-pandas
 numpy
+pandas
 scikit-learn
-lightgbm
-xgboost
 catboost
+optuna
+shap
+lime
 matplotlib
 seaborn
-plotly
-pyarrow
-tqdm
-optuna
+joblib

@@ -11,12 +11,12 @@ __pycache__/
 .venv/
 env/
 .venv*/
-
+venv310/
 # jupyter
 .ipynb_checkpoints/
 
 # data & artifacts
-data/raw/
+
 data/external/
 data/interim/
 models/
